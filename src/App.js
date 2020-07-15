@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import db from "./firebase";
 import Todo from "./components/Todo";
 import "./App.css";
+
 import { Button, FormControl, InputLabel, Input } from "@material-ui/core";
 
 const App = () => {
@@ -10,11 +11,17 @@ const App = () => {
 
   useEffect(() => {
     db.collection("todos").onSnapshot((snapshot) => {
-      setTodos(snapshot.docs.map((doc) => doc.data().todo));
+      setTodos(
+        snapshot.docs.map((doc) => ({ id: doc.id, todo: doc.data().todo }))
+      );
     });
   }, []);
+
   const addTodo = (e) => {
     e.preventDefault();
+    db.collection("todos").add({
+      todo: input,
+    });
     setTodos([...todos, input]);
     setInput("");
   };
