@@ -22,10 +22,6 @@ const Todo = (props) => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState();
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
   const editTodo = () => {
     db.collection("todos").doc(props.todo.id).set(
       {
